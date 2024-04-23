@@ -234,7 +234,22 @@ class Adafruit_BME680:
         if calc_hum < 0:
             calc_hum = 0
         return calc_hum
-
+      
+    @property
+    def dew_point(self):
+        """
+        Compute the dew point temperature for the current Temperature
+        and Humidity measured pair
+        """
+        t = self.temperature  # Temperatur in Celsius
+        h = self.humidity  # Relative Luftfeuchtigkeit in %
+    
+        # Dew Point Berechnung
+        dew_point = (243.12 * (math.log(h / 100) + ((17.62 * t) / (243.12 + t)))) / (17.62 - math.log(h / 100) - ((17.62 * t) / (243.12 + t)))
+        print("t", t)
+        print("h", h)
+        return dew_point
+    
     @property
     def altitude(self):
         """The altitude based on current ``pressure`` vs the sea level pressure
