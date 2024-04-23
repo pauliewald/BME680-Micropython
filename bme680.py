@@ -239,16 +239,33 @@ class Adafruit_BME680:
     def dew_point(self):
         """
         Compute the dew point temperature for the current Temperature
-        and Humidity measured pair
+        and Humidity measured, with adjustments to the Tetens equasion to accomodate the bme680 measurements,(taken out from similar lib for bme280 lib)
         """
-        t = self.temperature  # Temperatur in Celsius
-        h = self.humidity  # Relative Luftfeuchtigkeit in %
+        t = self.temperature  # temperature in celsius
+        h = self.humidity  # relative Humidity in %
     
         # Dew Point Berechnung
-        dew_point = (243.12 * (math.log(h / 100) + ((17.62 * t) / (243.12 + t)))) / (17.62 - math.log(h / 100) - ((17.62 * t) / (243.12 + t)))
-        print("t", t)
-        print("h", h)
+        dew_point = (243.12 * (math.log(h / 100) + ((17.62 * t) / (243.12 + t)))) / (17.62 - math.log(h / 100) - ((17.62 * t) / (243.12 + t)))     
+        #print("t", t)
+        #print("h", h)
         return dew_point
+
+
+  """ @property
+    def dew_point(self):
+        
+       #Compute the dew point temperature for the current Temperature
+       #and Humidity measured, according to the Magnus Tetens equasion
+      
+        t = self.temperature  # temperature in celsius
+        h = self.humidity  # relative Humidity in %
+    
+        # Dew Point Berechnung
+        dew_point = (237.7* (math.log(h / 100) + ((17.27 * t) / (237.7 + t)))) / (17.27 - math.log(h / 100) - ((17.27 * t) / (237.7 + t)))     
+        #print("t", t)
+        #print("h", h)
+        return dew_point
+"""
     
     @property
     def altitude(self):
